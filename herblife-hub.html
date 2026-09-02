@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome: Herb Life</title>
+<meta name="description" content="Tap for WiFi, our social links, or to leave us a review.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.herblifesa.co.za/tap/hillcrest">
+<meta property="og:title" content="Welcome: Herb Life">
+<meta property="og:description" content="Tap for WiFi, our social links, or to leave us a review.">
+<meta property="og:image" content="https://your-username.github.io/herblife-reviewtap/herblife-social-share.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Welcome: Herb Life">
+<meta name="twitter:description" content="Tap for WiFi, our social links, or to leave us a review.">
+<meta name="twitter:image" content="https://your-username.github.io/herblife-reviewtap/herblife-social-share.png">
+<style>
+  :root {
+    --bg: #000000; --panel: #141414; --ink: #FFFFFF; --muted: #9A9A9A;
+    --leaf: #8CB13C;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink); min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .card { width: 100%; max-width: 380px; text-align: center; }
+  .eyebrow { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; font-weight: 600; }
+  .logo { width: 100%; max-width: 260px; height: auto; margin: 0 auto 12px; display: block; }
+  .location { font-size: 12.5px; color: var(--muted); margin: 0 0 14px; }
+  .compliance {
+    display: inline-block; margin-bottom: 26px; padding: 6px 14px; border-radius: 20px;
+    background: var(--panel); border: 1px solid rgba(255,255,255,0.15); font-size: 11.5px;
+    color: var(--muted); letter-spacing: 0.3px;
+  }
+  .option {
+    display: flex; align-items: center; justify-content: center; gap: 14px; background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px 20px;
+    margin-bottom: 14px; text-decoration: none; color: var(--ink); text-align: center;
+  }
+  .option > span:not(.icon):not(.arrow) { flex: 1; }
+  .option .icon { flex-shrink: 0; }
+  .option .label { font-size: 16px; font-weight: 600; margin: 0 0 2px; }
+  .option .desc { font-size: 12.5px; color: var(--muted); margin: 0; }
+  .option .arrow { margin-left: auto; color: var(--muted); font-size: 18px; }
+  .foot-note { font-size: 11px; color: var(--muted); line-height: 1.5; margin-top: 22px; padding: 0 6px; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <p class="eyebrow">Welcome</p>
+    <!-- EDIT: swap in the final logo file if this one changes -->
+    <img class="logo" src="herblife-logo.png" alt="Herb Life">
+    <p class="location">Hillcrest &middot; The Colony Shopping Centre</p>
+    <div class="compliance">18+ &middot; Registered members only</div>
+
+    <!-- Guest WiFi -->
+    <a class="option" href="herblife-wifi.html">
+      <span class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24">
+          <path d="M4 9 A 12 12 0 0 1 20 9" stroke="#8CB13C" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <path d="M7.5 13 A 7 7 0 0 1 16.5 13" stroke="#8CB13C" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+          <circle cx="12" cy="17.5" r="2" fill="#8CB13C"/>
+        </svg>
+      </span>
+      <span>
+        <p class="label">Guest WiFi</p>
+        <p class="desc">Get the network name and password</p>
+      </span>
+      <span class="arrow">&rsaquo;</span>
+    </a>
+
+    <!-- Social media -->
+    <a class="option" href="herblife-social.html">
+      <span class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#8CB13C" stroke-width="2">
+          <circle cx="6" cy="12" r="2.2"/><circle cx="18" cy="6" r="2.2"/><circle cx="18" cy="18" r="2.2"/>
+          <path d="M7.8 11L16.2 7M7.8 13L16.2 17" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span>
+        <p class="label">Follow Us</p>
+        <p class="desc">Instagram, Facebook, and more</p>
+      </span>
+      <span class="arrow">&rsaquo;</span>
+    </a>
+
+    <!-- EDIT: replace with Herb Life's actual Google review share link -->
+    <a class="option" href="https://g.page/r/REPLACE_WITH_HERBLIFE_ID/review" target="_blank" rel="noopener">
+      <span class="icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="#8CB13C">
+          <path d="M12 2 L14.6 8.5 L21.5 9 L16.2 13.4 L18 20.2 L12 16.3 L6 20.2 L7.8 13.4 L2.5 9 L9.4 8.5 Z"/>
+        </svg>
+      </span>
+      <span>
+        <p class="label">Leave a Review</p>
+        <p class="desc">Tell us how your visit was</p>
+      </span>
+      <span class="arrow">&rsaquo;</span>
+    </a>
+
+    <p class="foot-note">For registered members 18 years and older. Herb Life operates in accordance with South African cannabis regulations. Please consume responsibly.</p>
+  </div>
+</body>
+</html>

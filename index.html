@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposal: ReviewTap for Herb Life</title>
+<meta name="description" content="A ReviewTap NFC proposal for Herb Life: WiFi, website, and Google reviews.">
+<meta property="og:type" content="website">
+<!-- EDIT: og:url once hosted -->
+<meta property="og:url" content="https://your-username.github.io/herblife-reviewtap/">
+<meta property="og:title" content="ReviewTap for Herb Life">
+<meta property="og:description" content="An NFC proposal for Herb Life: WiFi, website, and Google reviews.">
+<meta property="og:image" content="https://your-username.github.io/herblife-reviewtap/herblife-social-share.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ReviewTap for Herb Life">
+<meta name="twitter:description" content="An NFC proposal for Herb Life: WiFi, website, and Google reviews.">
+<meta name="twitter:image" content="https://your-username.github.io/herblife-reviewtap/herblife-social-share.png">
+<style>
+  :root {
+    --bg: #000000;
+    --panel: #141414;
+    --ink: #FFFFFF;
+    --muted: #9A9A9A;
+    --leaf: #8CB13C;
+    --pop: #FFFFFF;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+  a { color: var(--leaf); }
+  a:hover { color: var(--pop); }
+
+  .letterhead {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 16px 20px; margin-bottom: 8px; border-bottom: 2px solid var(--leaf);
+    font-size: 13px; letter-spacing: 0.5px; color: var(--ink); font-weight: 600; text-align: center;
+  }
+  .letterhead a { color: var(--pop); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--pop); }
+  .letterhead a:hover { color: var(--leaf); border-color: var(--leaf); }
+
+  .cover { padding: 44px 0 40px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
+  .eyebrow { font-size: 11px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; font-weight: 600; }
+  .logo-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; }
+  .logo-row svg { flex-shrink: 0; }
+  .logo-row span { font-size: 12.5px; color: var(--muted); letter-spacing: 0.5px; }
+  h1 { font-family: Georgia, "Iowan Old Style", serif; font-style: italic; font-weight: 400; font-size: 30px; margin: 0 0 20px; }
+  .meta-table { font-size: 13.5px; color: var(--muted); }
+  .meta-table div { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 3px 0; }
+  .meta-table span.label { min-width: 110px; color: var(--ink); font-weight: 600; text-align: right; }
+  .meta-table a { color: var(--muted); text-decoration: underline; }
+  .meta-table a:hover { color: var(--pop); }
+
+  section.block { padding: 40px 0; border-bottom: 1px solid rgba(255,255,255,0.08); text-align: center; }
+  section.block:last-of-type { border-bottom: none; }
+  .sec-num { font-family: Georgia, serif; font-style: italic; color: var(--pop); font-size: 14px; margin: 0 0 6px; }
+  h2 { font-family: Georgia, serif; font-style: italic; font-weight: 400; font-size: 21px; margin: 0 0 16px; }
+  p { color: var(--muted); font-size: 14.5px; margin: 0 0 14px; }
+  p.lead { color: var(--ink); }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; text-align: center; }
+  .grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .card { background: var(--panel); border-radius: 12px; padding: 16px 18px; }
+  .card h3 { margin: 0 0 6px; font-size: 14px; color: var(--leaf); }
+  .card p { margin: 0; font-size: 13px; }
+
+  .locations { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 6px; }
+  .locations span { background: var(--panel); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px;
+                     padding: 6px 12px; font-size: 12px; color: var(--muted); }
+  .locations span.active { border-color: var(--pop); color: var(--ink); }
+
+  ul.checklist { list-style: none; padding: 0; margin: 18px auto 0; max-width: 460px; }
+  ul.checklist li { display: flex; justify-content: center; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--ink); padding: 7px 0; text-align: left; }
+  ul.checklist li::before { content: "✓"; color: var(--leaf); font-weight: 700; flex-shrink: 0; }
+
+  .cta-inquire { display: inline-block; background: var(--pop); color: #000000; font-weight: 700;
+                 padding: 13px 26px; border-radius: 10px; text-decoration: none; font-size: 14.5px; margin-top: 6px;
+                 border: none; cursor: pointer; font-family: inherit; }
+
+  .table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; min-width: 460px; border-collapse: collapse; font-size: 13.5px; margin-top: 8px; }
+  th, td { text-align: center; padding: 10px 8px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  th { color: var(--muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  td.tier { color: var(--leaf); font-weight: 700; }
+  .note { color: var(--muted); font-size: 12.5px; margin-top: 12px; }
+
+  .step { display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; text-align: left; }
+  .num { font-family: Georgia, serif; font-style: italic; font-size: 20px; color: var(--pop); flex-shrink: 0; width: 26px; }
+  .step p { margin: 3px 0 0; font-size: 13.5px; }
+  .step strong { display: block; font-size: 14.5px; color: var(--ink); }
+
+  .compliance-strip { background: var(--panel); border-radius: 12px; padding: 16px 18px; font-size: 13px; color: var(--muted); }
+
+  footer.close { text-align: center; padding: 48px 0 40px; }
+  footer.close h2 { margin-bottom: 12px; }
+  .contact { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+  .contact a { color: var(--ink); border: 1px solid rgba(255,255,255,0.25); border-radius: 8px;
+               padding: 10px 18px; text-decoration: none; font-size: 13.5px; }
+
+  .billing-block {
+    text-align: center; margin: 0 20px 40px; padding: 16px 18px; border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.25); background: rgba(255,255,255,0.05);
+    font-size: 12.5px; color: var(--ink);
+  }
+  .billing-block a { color: var(--pop); font-weight: 700; text-decoration: none; border-bottom: 1px solid var(--pop); }
+  .billing-block a:hover { color: var(--leaf); border-color: var(--leaf); }
+
+  /* Modal */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(22,33,26,0.75);
+    align-items: center; justify-content: center; padding: 16px; z-index: 100;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--panel); border-radius: 14px; padding: 22px 20px; width: 100%; max-width: 420px;
+    max-height: 88vh; overflow-y: auto; position: relative; text-align: left;
+  }
+  .modal-close {
+    position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--muted);
+    font-size: 22px; line-height: 1; cursor: pointer; padding: 4px;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal h3 { font-family: Georgia, serif; font-style: italic; font-weight: 400; font-size: 19px; margin: 0 0 4px; color: var(--ink); }
+  .modal .modal-sub { font-size: 13px; color: var(--muted); margin: 0 0 18px; }
+  .modal-section-label { font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin: 18px 0 8px; font-weight: 600; }
+  .pkg-option {
+    display: flex; align-items: flex-start; gap: 10px; padding: 10px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1); margin-bottom: 8px; cursor: pointer;
+  }
+  .pkg-option:hover { border-color: rgba(242,169,59,0.4); }
+  .pkg-option input { margin-top: 3px; accent-color: var(--pop); flex-shrink: 0; }
+  .pkg-option .pkg-name { font-size: 14px; color: var(--ink); font-weight: 600; }
+  .pkg-option .pkg-desc { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .pkg-option .pkg-price { display: none; }
+  .field-label { display: block; font-size: 12.5px; color: var(--ink); font-weight: 600; margin: 4px 0 6px; }
+  .field-input {
+    width: 100%; background: var(--bg); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+    padding: 10px 12px; font-size: 14px; color: var(--ink); font-family: inherit; margin-bottom: 4px;
+  }
+  .field-input::placeholder { color: var(--muted); }
+  .field-error { font-size: 12px; color: var(--pop); display: none; margin: 0 0 10px; }
+  .field-error.show { display: block; }
+  .modal-submit { width: 100%; margin-top: 16px; display: block; text-align: center; }
+  .modal-status { font-size: 12.5px; color: var(--leaf); margin-top: 10px; text-align: center; display: none; }
+  .modal-status.show { display: block; }
+
+  .preview-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(22,33,26,0.8);
+    align-items: center; justify-content: center; padding: 16px; z-index: 100;
+  }
+  .preview-overlay.open { display: flex; }
+  .phone-frame {
+    position: relative; width: 300px; max-width: 100%; height: 600px; max-height: 82vh;
+    background: #000; border-radius: 34px; padding: 12px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .phone-frame iframe { width: 100%; height: 100%; border: 0; border-radius: 24px; background: var(--bg); }
+  .preview-close {
+    position: absolute; top: -14px; right: -14px; width: 32px; height: 32px; border-radius: 50%;
+    background: var(--pop); border: none; color: #000000; font-size: 18px; line-height: 1;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+  }
+
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr; }
+    .grid.cols-3 { grid-template-columns: 1fr; }
+    h1 { font-size: 24px; }
+    .meta-table span.label { min-width: 0; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap letterhead">
+  <span>ReviewTap by <a href="https://REPLACE_WITH_MADAPL_DIGITAL_URL.co.za" target="_blank" rel="noopener">MadApl Digital</a></span>
+</div>
+
+<section class="cover wrap">
+  <p class="eyebrow">Proposal</p>
+  <!-- EDIT: swap in the final logo file if this one changes -->
+  <img src="herblife-logo.png" alt="Herb Life" style="width:100%; max-width:220px; height:auto; margin:0 auto 22px; display:block;">
+  <h1>ReviewTap for Herb Life</h1>
+  <div class="meta-table">
+    <div><span class="label">Prepared for</span><span>Herb Life, Hillcrest, Shop 22C, The Colony Shopping Centre, 50 Old Main Rd</span></div>
+    <div><span class="label">Prepared by</span><span>Siya Madonsela | <a href="https://REPLACE_WITH_MADAPL_DIGITAL_URL.co.za" target="_blank" rel="noopener">MadApl Digital</a></span></div>
+    <div><span class="label">Date</span><span>15/08/2026</span></div>
+    <div><span class="label">Valid until</span><span>29/08/2026</span></div>
+  </div>
+  <div class="locations">
+    <span class="active">Hillcrest (pilot store)</span>
+    <span>Durban North</span>
+    <span>Umhlanga Ridge</span>
+    <span>Florida Road</span>
+  </div>
+</section>
+
+<section class="block wrap">
+  <p class="sec-num">01</p>
+  <h2>The situation</h2>
+  <p class="lead">Herb Life runs four stores across Durban. Like any cannabis retailer, it can't run the paid ads a normal retail brand would use to grow, so word of mouth and Google reviews carry more of that weight.</p>
+  <p>75% of consumers say they regularly or always read online reviews before choosing a local business, and 88% say they'd use a business that responds to all of its reviews, versus 47% for one that never responds, according to BrightLocal's 2024 Local Consumer Review Survey. A Harvard Business School study of Yelp ratings found that a one-star increase is linked to a 5 to 9% increase in revenue.</p>
+  <p>Meanwhile, day-to-day basics like WiFi at the counter still run on paper and memory, with no easy way to prompt a review while the visit is still fresh.</p>
+
+  <div class="grid cols-3" style="margin-top: 22px;">
+    <div class="card">
+      <h3 style="font-size:20px; color:var(--pop); margin-bottom:4px;">75%</h3>
+      <p style="font-size:12px;">regularly or always read reviews before visiting</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:20px; color:var(--pop); margin-bottom:4px;">5 to 9%</h3>
+      <p style="font-size:12px;">revenue lift linked to one extra star (Harvard, Luca 2011)</p>
+    </div>
+    <div class="card">
+      <h3 style="font-size:20px; color:var(--pop); margin-bottom:4px;">88%</h3>
+      <p style="font-size:12px;">would use a business that replies to its reviews</p>
+    </div>
+  </div>
+</section>
+
+<section class="block wrap">
+  <p class="sec-num">02</p>
+  <h2>What ReviewTap does for Herb Life</h2>
+  <p>NFC tags around the Hillcrest store, each opening a hosted page the moment a phone taps it. No app to download. Industry estimates put NFC completion at 60 to 80% at the point of service, against 35 to 50% for QR codes, since a tap is one action where a QR code needs someone to open a camera, scan, wait, and confirm.</p>
+  <button type="button" class="cta-inquire" id="openHubPreview" style="margin-bottom: 18px;">Preview the Live Hub →</button>
+  <div class="grid cols-3">
+    <div class="card">
+      <h3>Guest WiFi</h3>
+      <p>Network and password ready to copy at the counter, no handwritten card.</p>
+    </div>
+    <div class="card">
+      <h3>Visit Our Website</h3>
+      <p>A tap sends visitors straight to herblifesa.co.za. Businesses with a website are seen as 41% more trustworthy than those without one, per DreamHost's 2026 Local Business Trust Index.</p>
+    </div>
+    <div class="card">
+      <h3>Google Reviews</h3>
+      <p>A tap at checkout sends happy customers straight to Herb Life's Google review form, while the visit is still fresh in mind.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block wrap">
+  <p class="sec-num">03</p>
+  <h2>What's included</h2>
+  <ul class="checklist">
+    <li>NFC tags, programmed and tested on-site at Hillcrest</li>
+    <li>Hosted WiFi, website, and review pages in Herb Life's own look</li>
+    <li>One included call-out per month for wording or content changes</li>
+    <li>Google Business Profile check and refresh for the Hillcrest listing</li>
+    <li>Compliance and age-disclaimer wording matched to Herb Life's registration basis</li>
+  </ul>
+</section>
+
+<section class="block wrap">
+  <p class="sec-num">04</p>
+  <h2>Investment</h2>
+  <p class="lead">Pricing is tailored to how many tags you need and which extras you want (menu page, Google Business Profile work, ongoing reporting). Rather than list every combination here, tell us what you're interested in and we'll size a quote around it.</p>
+  <p class="note">Monthly maintenance is capped per store and includes one included call-out a month for wording or content changes. Further changes within the same month are billed separately.</p>
+  <p class="note">Rolling out to Durban North, Umhlanga Ridge, and Florida Road afterwards follows the same process once the Hillcrest pilot is live.</p>
+
+  <button type="button" class="cta-inquire" id="openQuoteModal">Request Demo / Quote →</button>
+</section>
+
+<section class="block wrap">
+  <p class="sec-num">05</p>
+  <h2>Process</h2>
+  <div class="step">
+    <div class="num">1</div>
+    <div><strong>Free consult at the Hillcrest branch</strong><p>We walk the store and map tags for the entrance, counter, and lounge.</p></div>
+  </div>
+  <div class="step">
+    <div class="num">2</div>
+    <div><strong>Live within 48 hours</strong><p>Tags programmed, pages built in Herb Life's colours, ready to tap.</p></div>
+  </div>
+  <div class="step">
+    <div class="num">3</div>
+    <div><strong>Review, then roll out</strong><p>Once Hillcrest is dialled in, the same setup extends to the other three stores.</p></div>
+  </div>
+  <p class="note" style="margin-top:4px;">Upon quotation approval, we'll refine the design of every hosted page to match Herb Life's full corporate identity (exact brand colours, logo, fonts) before anything goes live. What's shown in this proposal and the linked hub preview is a working draft, not the final look.</p>
+</section>
+
+<section class="block wrap">
+  <div class="compliance-strip">All ReviewTap pages are built for licensed, membership-based operators and carry age and membership disclaimers matched to Herb Life's specific registration basis; nothing here substitutes for their own compliance review.</div>
+</section>
+
+<footer class="close wrap">
+  <p class="eyebrow">Next step</p>
+  <h2>Ready when you are</h2>
+  <p>Reply to this proposal or reach out directly. We're happy to do the walk-through at the Hillcrest branch in person.</p>
+  <div class="contact">
+    <a href="https://wa.me/27605376648?text=Hi%2C%20I%27d%20like%20to%20go%20ahead%20with%20the%20ReviewTap%20proposal%20for%20Herb%20Life%20Hillcrest." target="_blank" rel="noopener">WhatsApp</a>
+  </div>
+</footer>
+
+<div class="billing-block">
+  ReviewTap is a division of <a href="https://REPLACE_WITH_MADAPL_DIGITAL_URL.co.za" target="_blank" rel="noopener">MadApl Digital</a>. All quotes and invoices arising from this proposal are issued by MadApl Digital.
+</div>
+
+<!-- Quote request modal -->
+<div class="modal-overlay" id="quoteModalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="quoteModalTitle">
+    <button type="button" class="modal-close" id="closeQuoteModal" aria-label="Close">×</button>
+    <h3 id="quoteModalTitle">Build Your Quote</h3>
+    <p class="modal-sub">Select what you're interested in, we'll size a package around it.</p>
+
+    <p class="modal-section-label">Tag tiers</p>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="Basic" data-price="R300/tag">
+      <span><span class="pkg-name">Basic</span><br><span class="pkg-desc">Tag + WiFi code</span></span>
+      <span class="pkg-price">R300</span>
+    </label>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="Rollie" data-price="R400/tag">
+      <span><span class="pkg-name">Rollie</span><br><span class="pkg-desc">+ Google review link</span></span>
+      <span class="pkg-price">R400</span>
+    </label>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="Bong" data-price="R450/tag">
+      <span><span class="pkg-name">Bong</span><br><span class="pkg-desc">+ website link</span></span>
+      <span class="pkg-price">R450</span>
+    </label>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="Dab" data-price="R550/tag">
+      <span><span class="pkg-name">Dab</span><br><span class="pkg-desc">+ social media links</span></span>
+      <span class="pkg-price">R550</span>
+    </label>
+
+    <p class="modal-section-label">Optional extras</p>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="Menu & Pricing Page" data-price="R300">
+      <span><span class="pkg-name">Menu &amp; Pricing Page</span><br><span class="pkg-desc">Added to any tier</span></span>
+      <span class="pkg-price">R300</span>
+    </label>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="GBP New Setup" data-price="R850">
+      <span><span class="pkg-name">GBP New Setup</span><br><span class="pkg-desc">Details, verification, 5 photos</span></span>
+      <span class="pkg-price">R850</span>
+    </label>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="GBP Refresh" data-price="R350">
+      <span><span class="pkg-name">GBP Refresh</span><br><span class="pkg-desc">Hours, description, contact info</span></span>
+      <span class="pkg-price">R350</span>
+    </label>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="GBP Update" data-price="R650">
+      <span><span class="pkg-name">GBP Update</span><br><span class="pkg-desc">5 new images + full info update</span></span>
+      <span class="pkg-price">R650</span>
+    </label>
+    <label class="pkg-option">
+      <input type="checkbox" class="pkg-checkbox" data-name="Monthly Scan & Review Reporting" data-price="R150/month">
+      <span><span class="pkg-name">Scan &amp; Review Reporting</span><br><span class="pkg-desc">Per-tag tracked link analytics</span></span>
+      <span class="pkg-price">R150/mo</span>
+    </label>
+    <p class="field-error" id="pkgError">Select at least one package.</p>
+
+    <p class="modal-section-label">Your details</p>
+    <label class="field-label" for="callTime">Best time for a call</label>
+    <input type="text" class="field-input" id="callTime" placeholder="e.g. Weekday mornings, or Tue 2pm">
+    <p class="field-error" id="timeError">Please let us know a suitable call time.</p>
+
+    <label class="field-label" for="contactName">Your name (optional)</label>
+    <input type="text" class="field-input" id="contactName" placeholder="e.g. Priya">
+
+    <button type="button" class="cta-inquire modal-submit" id="submitQuote">Send via WhatsApp</button>
+    <p class="modal-status" id="quoteStatus">Opening WhatsApp…</p>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('quoteModalOverlay');
+  const openBtn = document.getElementById('openQuoteModal');
+  const closeBtn = document.getElementById('closeQuoteModal');
+  const submitBtn = document.getElementById('submitQuote');
+  const callTimeInput = document.getElementById('callTime');
+  const nameInput = document.getElementById('contactName');
+  const pkgError = document.getElementById('pkgError');
+  const timeError = document.getElementById('timeError');
+  const statusMsg = document.getElementById('quoteStatus');
+
+  function openModal() { overlay.classList.add('open'); }
+  function closeModal() { overlay.classList.remove('open'); }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+
+  submitBtn.addEventListener('click', () => {
+    const checked = Array.from(document.querySelectorAll('.pkg-checkbox:checked'));
+    const callTime = callTimeInput.value.trim();
+    const name = nameInput.value.trim();
+
+    let valid = true;
+    if (checked.length === 0) { pkgError.classList.add('show'); valid = false; } else { pkgError.classList.remove('show'); }
+    if (!callTime) { timeError.classList.add('show'); valid = false; } else { timeError.classList.remove('show'); }
+    if (!valid) return;
+
+    const lines = [
+      "Hi, I'd like to request a demo/quote for ReviewTap at Herb Life Hillcrest.",
+      "",
+      "Selected packages:",
+      ...checked.map(cb => `- ${cb.dataset.name}`),
+      "",
+      `Best time to call: ${callTime}`,
+    ];
+    if (name) lines.push(`Name: ${name}`);
+
+    const message = encodeURIComponent(lines.join("\n"));
+    statusMsg.classList.add('show');
+    window.open(`https://wa.me/27605376648?text=${message}`, '_blank', 'noopener');
+    setTimeout(() => { closeModal(); statusMsg.classList.remove('show'); }, 600);
+  });
+</script>
+<div class="preview-overlay" id="hubPreviewOverlay">
+  <div class="phone-frame">
+    <button type="button" class="preview-close" id="closeHubPreview" aria-label="Close preview">×</button>
+    <iframe src="herblife-hub.html" title="Herb Life ReviewTap hub live preview"></iframe>
+  </div>
+</div>
+
+<script>
+  const previewOverlay = document.getElementById('hubPreviewOverlay');
+  document.getElementById('openHubPreview').addEventListener('click', () => previewOverlay.classList.add('open'));
+  document.getElementById('closeHubPreview').addEventListener('click', () => previewOverlay.classList.remove('open'));
+  previewOverlay.addEventListener('click', (e) => { if (e.target === previewOverlay) previewOverlay.classList.remove('open'); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && previewOverlay.classList.contains('open')) previewOverlay.classList.remove('open'); });
+</script>
+
+</body>
+</html>
